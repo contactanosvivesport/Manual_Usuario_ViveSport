@@ -1,0 +1,3021 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Manual de usuario de ViveSport: registro, acceso, equipos, torneos, inscripciones, partidos y resultados deportivos."
+    >
+
+    <meta name="author" content="Viveros Team">
+
+    <title>Manual de Usuario | ViveSport</title>
+
+    <style>
+        :root {
+            --verde: #004f3f;
+            --verde-oscuro: #00392e;
+            --verde-hover: #0a6755;
+            --verde-claro: #e7f4ef;
+            --fondo: #f4f6f8;
+            --blanco: #ffffff;
+            --texto: #25332f;
+            --texto-secundario: #62716b;
+            --borde: #dce5e1;
+            --azul-claro: #eaf3ff;
+            --azul: #235e9c;
+            --amarillo-claro: #fff6d9;
+            --amarillo: #8a6411;
+            --rojo-claro: #ffeded;
+            --rojo: #a52a2a;
+            --sombra: 0 8px 28px rgba(0, 45, 35, 0.07);
+            --radio: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 24px;
+        }
+
+        body {
+            margin: 0;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+            background: var(--fondo);
+            color: var(--texto);
+            line-height: 1.7;
+        }
+
+        a {
+            color: var(--verde);
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 14px 24px;
+            background: var(--verde);
+            color: var(--blanco);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .brand-mark {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.13);
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .brand-name {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+        .brand-subtitle {
+            margin: 0;
+            color: #d5e8e2;
+            font-size: 12px;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .top-button {
+            padding: 9px 13px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 9px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .top-button:hover {
+            background: rgba(255, 255, 255, 0.13);
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 285px minmax(0, 1fr);
+            min-height: calc(100vh - 70px);
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 70px;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+            padding: 22px 15px 30px;
+            background: #ffffff;
+            border-right: 1px solid var(--borde);
+        }
+
+        .sidebar-heading {
+            margin: 0 10px 12px;
+            color: var(--texto-secundario);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.1px;
+            text-transform: uppercase;
+        }
+
+        .search-box {
+            margin: 0 7px 22px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid var(--borde);
+            border-radius: 10px;
+            outline: none;
+            background: #fbfcfc;
+            color: var(--texto);
+        }
+
+        .search-box input:focus {
+            border-color: var(--verde-hover);
+            box-shadow: 0 0 0 3px rgba(10, 103, 85, 0.1);
+        }
+
+        .menu-group {
+            margin-bottom: 21px;
+        }
+
+        .menu-title {
+            margin: 0 10px 7px;
+            color: #84918c;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .sidebar ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin: 3px 0;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 8px 10px;
+            border-radius: 8px;
+            color: #40514a;
+            text-decoration: none;
+            font-size: 13px;
+            line-height: 1.45;
+            transition:
+                background 0.15s ease,
+                color 0.15s ease;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: var(--verde);
+            color: white;
+        }
+
+        .main {
+            min-width: 0;
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 48px 40px;
+            border-radius: 20px;
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(255, 255, 255, 0.13),
+                    transparent 35%
+                ),
+                linear-gradient(135deg, #00392e, #006c54);
+            color: white;
+            box-shadow: var(--sombra);
+        }
+
+        .hero::after {
+            position: absolute;
+            right: -55px;
+            bottom: -100px;
+            width: 280px;
+            height: 280px;
+            border: 35px solid rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            content: "";
+        }
+
+        .hero-kicker {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 5px 11px;
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 30px;
+            color: #d6eee5;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            font-size: clamp(34px, 5vw, 54px);
+            line-height: 1.15;
+            letter-spacing: -1.5px;
+        }
+
+        .hero h1 span {
+            color: #a5e7ce;
+        }
+
+        .hero h2 {
+            position: relative;
+            z-index: 1;
+            margin: 13px 0 15px;
+            font-size: clamp(21px, 3vw, 29px);
+            font-weight: 600;
+        }
+
+        .hero-description {
+            position: relative;
+            z-index: 1;
+            max-width: 650px;
+            margin: 0;
+            color: #e0eee8;
+            font-size: 16px;
+        }
+
+        .hero-meta {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 25px;
+        }
+
+        .hero-meta span {
+            padding: 7px 11px;
+            border-radius: 7px;
+            background: rgba(255, 255, 255, 0.12);
+            color: #f1faf6;
+            font-size: 12px;
+        }
+
+        section {
+            margin-top: 24px;
+            padding: 30px;
+            border: 1px solid var(--borde);
+            border-radius: var(--radio);
+            background: var(--blanco);
+            box-shadow: var(--sombra);
+            scroll-margin-top: 95px;
+        }
+
+        section h2 {
+            margin: 8px 0 17px;
+            color: var(--verde);
+            font-size: clamp(22px, 3vw, 29px);
+            line-height: 1.3;
+        }
+
+        section h3 {
+            margin: 25px 0 10px;
+            color: var(--verde-oscuro);
+            font-size: 18px;
+        }
+
+        section h4 {
+            margin: 18px 0 8px;
+            color: #344a41;
+            font-size: 15px;
+        }
+
+        section p {
+            margin: 12px 0;
+        }
+
+        .section-number {
+            display: inline-block;
+            color: #78877f;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .section-intro {
+            color: #53665d;
+            font-size: 17px;
+        }
+
+        .divider {
+            height: 1px;
+            margin: 24px 0;
+            background: var(--borde);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+            margin: 18px 0;
+        }
+
+        .grid.three {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .card {
+            padding: 19px;
+            border: 1px solid var(--borde);
+            border-radius: 12px;
+            background: #fcfdfd;
+        }
+
+        .card h3,
+        .card h4 {
+            margin-top: 0;
+        }
+
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .card.admin {
+            border-top: 4px solid var(--verde);
+        }
+
+        .card.user {
+            border-top: 4px solid #4b8fc7;
+        }
+
+        .card.warning-card {
+            border-top: 4px solid #e2b54c;
+        }
+
+        .steps {
+            display: grid;
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 36px minmax(0, 1fr);
+            align-items: start;
+            gap: 12px;
+        }
+
+        .step-number {
+            display: grid;
+            place-items: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: var(--verde-claro);
+            color: var(--verde);
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .step-content {
+            padding-top: 3px;
+        }
+
+        .step-content strong {
+            color: #183d30;
+        }
+
+        .custom {
+            margin: 12px 0;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .custom li {
+            position: relative;
+            margin: 8px 0;
+            padding-left: 25px;
+        }
+
+        .custom li::before {
+            position: absolute;
+            left: 0;
+            top: 1px;
+            color: var(--verde-hover);
+            font-weight: 900;
+            content: "✓";
+        }
+
+        .info,
+        .warning,
+        .danger,
+        .tip {
+            margin: 18px 0;
+            padding: 15px 17px;
+            border-radius: 10px;
+        }
+
+        .info {
+            border-left: 4px solid #4e8ecb;
+            background: var(--azul-claro);
+            color: #214d7b;
+        }
+
+        .warning {
+            border-left: 4px solid #e2b54c;
+            background: var(--amarillo-claro);
+            color: #71520c;
+        }
+
+        .danger {
+            border-left: 4px solid #d15a5a;
+            background: var(--rojo-claro);
+            color: #852828;
+        }
+
+        .tip {
+            border-left: 4px solid #3f9c75;
+            background: #e9f7ef;
+            color: #235d43;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 17px 0;
+            border: 1px solid var(--borde);
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th,
+        td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--borde);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #edf5f1;
+            color: var(--verde-oscuro);
+            font-size: 13px;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 9px;
+            border-radius: 20px;
+            background: #edf2ef;
+            color: #42554a;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .badge.green {
+            background: #e0f4e9;
+            color: #1d6946;
+        }
+
+        .badge.yellow {
+            background: #fff2cc;
+            color: #8a6411;
+        }
+
+        .badge.blue {
+            background: #e5efff;
+            color: #245d9a;
+        }
+
+        .badge.red {
+            background: #ffe5e5;
+            color: #9b2d2d;
+        }
+
+        .flow {
+            display: grid;
+            gap: 10px;
+            max-width: 720px;
+            margin: 20px auto;
+        }
+
+        .flow-box {
+            padding: 14px 18px;
+            border: 1px solid var(--borde);
+            border-radius: 10px;
+            background: #f9fbfa;
+            text-align: center;
+        }
+
+        .flow-box.primary {
+            border-color: var(--verde);
+            background: var(--verde);
+            color: white;
+            font-weight: 700;
+        }
+
+        .flow-arrow {
+            color: var(--verde);
+            text-align: center;
+            font-size: 23px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .faq {
+            margin: 12px 0;
+            padding: 16px 18px;
+            border: 1px solid var(--borde);
+            border-radius: 10px;
+        }
+
+        .faq h4 {
+            margin-top: 0;
+        }
+
+        .faq p:last-child {
+            margin-bottom: 0;
+        }
+
+        .checklist {
+            display: grid;
+            gap: 10px;
+            margin: 16px 0;
+        }
+
+        .checklist label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 11px 13px;
+            border: 1px solid var(--borde);
+            border-radius: 9px;
+            cursor: pointer;
+        }
+
+        .checklist input {
+            margin-top: 6px;
+            accent-color: var(--verde);
+        }
+
+        .footer {
+            margin: 28px 0 5px;
+            padding: 25px;
+            border-radius: 13px;
+            background: #e8eeeb;
+            color: #53645b;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .footer strong {
+            color: var(--verde);
+        }
+
+        .back-top {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 90;
+            display: none;
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 13px;
+            background: var(--verde);
+            color: white;
+            box-shadow: var(--sombra);
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .back-top.visible {
+            display: block;
+        }
+
+        .no-results {
+            display: none;
+            margin: 12px 8px;
+            color: #9b2d2d;
+            font-size: 12px;
+        }
+
+        @media (max-width: 1050px) {
+            .layout {
+                grid-template-columns: 245px minmax(0, 1fr);
+            }
+
+            .main {
+                padding: 22px;
+            }
+
+            section {
+                padding: 24px;
+            }
+
+            .grid.three {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            .topbar {
+                position: static;
+                align-items: flex-start;
+                padding: 13px 16px;
+            }
+
+            .topbar-actions {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .top-button {
+                padding: 8px 9px;
+                font-size: 12px;
+            }
+
+            .layout {
+                display: block;
+            }
+
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                max-height: none;
+                border-right: none;
+                border-bottom: 1px solid var(--borde);
+            }
+
+            .main {
+                padding: 15px;
+            }
+
+            .hero {
+                padding: 32px 24px;
+            }
+
+            section {
+                padding: 22px 18px;
+                margin-top: 16px;
+            }
+
+            .grid,
+            .grid.three {
+                grid-template-columns: 1fr;
+            }
+
+            .brand-subtitle {
+                display: none;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .brand-name {
+                font-size: 17px;
+            }
+
+            .brand-mark {
+                width: 36px;
+                height: 36px;
+            }
+
+            .topbar {
+                flex-wrap: wrap;
+            }
+
+            .topbar-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .hero {
+                padding: 28px 19px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: #111;
+                font-size: 10.5pt;
+            }
+
+            .topbar,
+            .sidebar,
+            .back-top,
+            .no-print {
+                display: none !important;
+            }
+
+            .layout {
+                display: block;
+            }
+
+            .main {
+                padding: 0;
+            }
+
+            .container {
+                max-width: none;
+            }
+
+            .hero {
+                padding: 28px;
+                background: #004f3f !important;
+                color: white !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            section {
+                margin-top: 12px;
+                padding: 20px;
+                border: 1px solid #ddd;
+                box-shadow: none;
+                break-inside: avoid;
+            }
+
+            h2,
+            h3,
+            h4 {
+                break-after: avoid;
+            }
+
+            .card,
+            .info,
+            .warning,
+            .danger,
+            .tip,
+            th,
+            .flow-box {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            .footer {
+                background: white;
+                border: 1px solid #ddd;
+            }
+        }
+    </style>
+</head>
+
+<body id="inicio">
+
+    <header class="topbar no-print">
+        <div class="brand">
+            <div class="brand-mark" aria-hidden="true">V</div>
+
+            <div>
+                <p class="brand-name">ViveSport</p>
+                <p class="brand-subtitle">Manual de usuario de la plataforma</p>
+            </div>
+        </div>
+
+        <div class="topbar-actions">
+            <button
+                class="top-button"
+                type="button"
+                onclick="window.print()"
+                aria-label="Imprimir o guardar el manual en PDF"
+            >
+                Imprimir / PDF
+            </button>
+
+            <button
+                class="top-button"
+                type="button"
+                onclick="window.location.hash='inicio'"
+            >
+                Ir al inicio
+            </button>
+        </div>
+    </header>
+
+    <div class="layout">
+
+        <aside class="sidebar no-print" aria-label="Índice del manual">
+
+            <p class="sidebar-heading">Contenido del manual</p>
+
+            <div class="search-box">
+                <input
+                    id="buscador"
+                    type="search"
+                    placeholder="Buscar una sección..."
+                    aria-label="Buscar en el índice"
+                >
+                <p id="sinResultados" class="no-results">
+                    No se encontraron secciones.
+                </p>
+            </div>
+
+            <nav id="indice">
+
+                <div class="menu-group">
+                    <p class="menu-title">Información inicial</p>
+                    <ul>
+                        <li><a href="#introduccion">01. Introducción</a></li>
+                        <li><a href="#requisitos">02. Requisitos de acceso</a></li>
+                        <li><a href="#roles">03. Roles y permisos</a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-group">
+                    <p class="menu-title">Acceso a la plataforma</p>
+                    <ul>
+                        <li><a href="#registro">04. Registro de usuario</a></li>
+                        <li><a href="#acceso">05. Inicio de sesión</a></li>
+                        <li><a href="#recuperacion">06. Recuperar contraseña</a></li>
+                        <li><a href="#panel">07. Panel principal</a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-group">
+                    <p class="menu-title">Participación deportiva</p>
+                    <ul>
+                        <li><a href="#torneos">08. Consultar torneos</a></li>
+                        <li><a href="#equipos">09. Equipos e integrantes</a></li>
+                        <li><a href="#inscripciones">10. Inscripciones</a></li>
+                        <li><a href="#partidos">11. Partidos programados</a></li>
+                        <li><a href="#resultados">12. Resultados deportivos</a></li>
+                        <li><a href="#clasificacion">13. Grupos y clasificación</a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-group">
+                    <p class="menu-title">Administración</p>
+                    <ul>
+                        <li><a href="#admin-torneos">14. Crear y gestionar torneos</a></li>
+                        <li><a href="#admin-inscripciones">15. Gestionar inscripciones</a></li>
+                        <li><a href="#admin-equipos">16. Gestionar equipos</a></li>
+                        <li><a href="#admin-partidos">17. Programar partidos</a></li>
+                        <li><a href="#admin-resultados">18. Registrar resultados</a></li>
+                        <li><a href="#admin-usuarios">19. Gestionar usuarios</a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-group">
+                    <p class="menu-title">Información final</p>
+                    <ul>
+                        <li><a href="#seguridad">20. Seguridad</a></li>
+                        <li><a href="#problemas">21. Solución de problemas</a></li>
+                        <li><a href="#flujo">22. Flujo general</a></li>
+                        <li><a href="#glosario">23. Glosario</a></li>
+                        <li><a href="#verificacion">24. Lista de verificación</a></li>
+                        <li><a href="#conclusiones">25. Conclusiones</a></li>
+                        <li><a href="#contacto">26. Contacto y control documental</a></li>
+                    </ul>
+                </div>
+
+            </nav>
+        </aside>
+
+        <main class="main">
+            <div class="container">
+
+                <!-- PORTADA -->
+
+                <section class="hero" id="portada">
+
+                    <span class="hero-kicker">Guía de uso · 2026</span>
+
+                    <h1>Vive<span>Sport</span></h1>
+
+                    <h2>Manual de Usuario</h2>
+
+                    <p class="hero-description">
+                        Guía para aprender a registrarse, utilizar la plataforma,
+                        participar en torneos y consultar la información deportiva.
+                        También explica las principales tareas administrativas para
+                        gestionar competencias, equipos, partidos y resultados.
+                    </p>
+
+                    <div class="hero-meta">
+                        <span>Versión 1.0</span>
+                        <span>Año 2026</span>
+                        <span>Desarrollado por Viveros Team</span>
+                    </div>
+
+                </section>
+
+                <!-- 01. INTRODUCCIÓN -->
+
+                <section id="introduccion">
+
+                    <span class="section-number">Sección 01 · Información inicial</span>
+
+                    <h2>1. Introducción</h2>
+
+                    <p class="section-intro">
+                        ViveSport es una plataforma web destinada a facilitar la
+                        organización, administración y consulta de competencias deportivas.
+                    </p>
+
+                    <p>
+                        El sistema centraliza la información de usuarios, equipos,
+                        torneos, inscripciones, partidos y resultados. De esta manera,
+                        los participantes pueden consultar las competencias disponibles
+                        y solicitar la inscripción de sus equipos, mientras que el
+                        administrador puede organizar los torneos y mantener actualizada
+                        la información deportiva.
+                    </p>
+
+                    <p>
+                        La plataforma contempla las disciplinas de fútbol, voleibol y
+                        tenis de mesa. Cada deporte puede tener reglas específicas para
+                        el registro de resultados.
+                    </p>
+
+                    <div class="grid three">
+
+                        <div class="card">
+                            <h3>Fútbol</h3>
+                            <p>
+                                Registro del marcador mediante los goles del partido,
+                                con información asociada de jugadores y tarjetas.
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <h3>Voleibol</h3>
+                            <p>
+                                Registro de resultados por sets, de acuerdo con el
+                                formato configurado para el encuentro.
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <h3>Tenis de mesa</h3>
+                            <p>
+                                Registro de sets con sus respectivas puntuaciones y
+                                reglas de victoria.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <h3>Objetivo del manual</h3>
+
+                    <p>
+                        Explicar, de forma ordenada y comprensible, los procedimientos
+                        necesarios para utilizar las funciones de ViveSport según el
+                        tipo de cuenta y los permisos asignados.
+                    </p>
+
+                    <div class="info">
+                        <strong>Importante:</strong> las opciones que aparecen en la
+                        plataforma pueden variar según el rol de la cuenta, el estado
+                        del torneo y la configuración de cada competencia.
+                    </div>
+
+                </section>
+
+                <!-- 02. REQUISITOS -->
+
+                <section id="requisitos">
+
+                    <span class="section-number">Sección 02 · Información inicial</span>
+
+                    <h2>2. Requisitos para utilizar ViveSport</h2>
+
+                    <p>
+                        Antes de ingresar, se recomienda verificar que el dispositivo
+                        cumpla con las siguientes condiciones:
+                    </p>
+
+                    <ul class="custom">
+                        <li>Computador, teléfono celular o tableta con acceso a Internet.</li>
+                        <li>Navegador web actualizado, como Chrome, Safari, Firefox o Edge.</li>
+                        <li>Conexión estable a Internet.</li>
+                        <li>Una cuenta registrada para las funciones que requieren autenticación.</li>
+                        <li>Correo electrónico válido y accesible.</li>
+                        <li>Contraseña correcta para iniciar sesión.</li>
+                    </ul>
+
+                    <h3>Recomendaciones de navegación</h3>
+
+                    <ul class="custom">
+                        <li>Utilizar una versión reciente del navegador.</li>
+                        <li>Evitar cerrar la página mientras se envía un formulario.</li>
+                        <li>Leer los mensajes de validación antes de volver a enviar los datos.</li>
+                        <li>Comprobar la conexión si una operación tarda en completarse.</li>
+                    </ul>
+
+                    <div class="warning">
+                        <strong>Nota:</strong> disponer de una cuenta no significa que
+                        todas las funciones estén disponibles. Las acciones administrativas
+                        requieren los permisos correspondientes.
+                    </div>
+
+                </section>
+
+                <!-- 03. ROLES -->
+
+                <section id="roles">
+
+                    <span class="section-number">Sección 03 · Información inicial</span>
+
+                    <h2>3. Roles y permisos</h2>
+
+                    <p>
+                        ViveSport distingue entre usuarios y administradores. Cada rol
+                        dispone de opciones diferentes para proteger la información y
+                        controlar las operaciones realizadas en la plataforma.
+                    </p>
+
+                    <div class="grid">
+
+                        <div class="card user">
+
+                            <h3>Usuario</h3>
+
+                            <p>
+                                Participa en las actividades deportivas y consulta la
+                                información disponible para su cuenta.
+                            </p>
+
+                            <ul class="custom">
+                                <li>Crear una cuenta.</li>
+                                <li>Iniciar sesión.</li>
+                                <li>Consultar torneos.</li>
+                                <li>Registrar o gestionar la información de un equipo, según las opciones habilitadas.</li>
+                                <li>Solicitar la inscripción de un equipo.</li>
+                                <li>Consultar el estado de las inscripciones.</li>
+                                <li>Consultar partidos y resultados.</li>
+                            </ul>
+
+                        </div>
+
+                        <div class="card admin">
+
+                            <h3>Administrador</h3>
+
+                            <p>
+                                Organiza las competencias y gestiona la información
+                                para la que tiene autorización.
+                            </p>
+
+                            <ul class="custom">
+                                <li>Crear y configurar torneos.</li>
+                                <li>Administrar la apertura de inscripciones.</li>
+                                <li>Revisar solicitudes de inscripción.</li>
+                                <li>Aceptar o rechazar equipos.</li>
+                                <li>Gestionar equipos.</li>
+                                <li>Programar y modificar partidos.</li>
+                                <li>Registrar resultados.</li>
+                                <li>Gestionar cuentas de usuario.</li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                    <div class="danger">
+                        <strong>Control de acceso:</strong> una persona no debe asumir
+                        que es administradora por haberse registrado. Los permisos
+                        administrativos deben asignarse de manera autorizada.
+                    </div>
+
+                </section>
+
+                <!-- 04. REGISTRO -->
+
+                <section id="registro">
+
+                    <span class="section-number">Sección 04 · Acceso a la plataforma</span>
+
+                    <h2>4. Registro de usuario</h2>
+
+                    <p class="section-intro">
+                        El registro permite crear una cuenta para acceder a las funciones
+                        habilitadas para los participantes de ViveSport.
+                    </p>
+
+                    <h3>4.1. Datos que pueden solicitarse</h3>
+
+                    <p>
+                        El formulario de registro solicita información personal y
+                        académica para identificar la cuenta. De acuerdo con los campos
+                        configurados en la plataforma, pueden incluirse:
+                    </p>
+
+                    <ul class="custom">
+                        <li>Nombre.</li>
+                        <li>Apellido.</li>
+                        <li>Correo electrónico.</li>
+                        <li>Número de celular.</li>
+                        <li>Centro de formación.</li>
+                        <li>Jornada.</li>
+                        <li>Número de ficha.</li>
+                        <li>Contraseña y confirmación de contraseña, cuando el formulario las solicite.</li>
+                    </ul>
+
+                    <h3>4.2. Centros de formación</h3>
+
+                    <p>Las opciones de centro de formación conocidas son:</p>
+
+                    <ul class="custom">
+                        <li>Diseño, Confección y Moda.</li>
+                        <li>Manufactura de Cuero.</li>
+                    </ul>
+
+                    <h3>4.3. Jornadas disponibles</h3>
+
+                    <ul class="custom">
+                        <li>Mañana.</li>
+                        <li>Tarde.</li>
+                        <li>Noche.</li>
+                    </ul>
+
+                    <div class="warning">
+                        <strong>Número de ficha:</strong> la ficha debe contener
+                        exactamente siete dígitos. Verifique el número antes de enviar
+                        el formulario.
+                    </div>
+
+                    <h3>4.4. Procedimiento para crear una cuenta</h3>
+
+                    <div class="steps">
+
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>Abra ViveSport.</strong>
+                                Ingrese a la dirección oficial de la plataforma desde
+                                un navegador web.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <strong>Busque la opción de registro.</strong>
+                                Seleccione el enlace o botón denominado
+                                <em>Registrarse</em> o <em>Crear cuenta</em>, según
+                                aparezca en la versión publicada.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <strong>Complete sus datos.</strong>
+                                Escriba la información personal solicitada en los campos
+                                del formulario.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <strong>Seleccione la información académica.</strong>
+                                Elija el centro de formación y la jornada que correspondan
+                                a sus datos.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <strong>Revise la ficha.</strong>
+                                Compruebe que el número tenga exactamente siete dígitos.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">6</div>
+                            <div class="step-content">
+                                <strong>Complete los datos de acceso.</strong>
+                                Si el formulario solicita una contraseña y su confirmación,
+                                introdúzcalas siguiendo las indicaciones mostradas.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">7</div>
+                            <div class="step-content">
+                                <strong>Envíe el formulario.</strong>
+                                Pulse el botón para registrar la cuenta y espere la
+                                respuesta del sistema.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">8</div>
+                            <div class="step-content">
+                                <strong>Compruebe el resultado.</strong>
+                                Si el registro se completa, utilice el correo y la
+                                contraseña registrados para iniciar sesión.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <h3>4.5. Recomendaciones para el registro</h3>
+
+                    <ul class="custom">
+                        <li>Utilice un correo electrónico válido al que pueda acceder.</li>
+                        <li>Escriba correctamente su nombre y apellido.</li>
+                        <li>Revise el centro y la jornada antes de enviar el formulario.</li>
+                        <li>No comparta su contraseña con otras personas.</li>
+                        <li>Si aparece un mensaje de error, corrija el campo indicado y vuelva a intentarlo.</li>
+                    </ul>
+
+                    <div class="info">
+                        <strong>Si no aparece la opción de registro:</strong> compruebe
+                        que está en la página oficial de ViveSport. Si la opción no está
+                        habilitada, solicite orientación al responsable de la plataforma.
+                    </div>
+
+                </section>
+
+                <!-- 05. ACCESO -->
+
+                <section id="acceso">
+
+                    <span class="section-number">Sección 05 · Acceso a la plataforma</span>
+
+                    <h2>5. Inicio de sesión</h2>
+
+                    <p>
+                        Después de crear la cuenta, el usuario puede acceder a ViveSport
+                        con su correo electrónico y su contraseña.
+                    </p>
+
+                    <div class="steps">
+
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                Abra la dirección oficial de ViveSport.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                Seleccione <strong>Iniciar sesión</strong>.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                Introduzca el correo electrónico asociado a su cuenta.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                Introduzca su contraseña.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                Pulse el botón para ingresar y espere la respuesta del sistema.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <p>
+                        Si las credenciales son correctas, el sistema permitirá el acceso
+                        y mostrará las opciones correspondientes al rol de la cuenta.
+                    </p>
+
+                    <h3>Si no puede iniciar sesión</h3>
+
+                    <ul class="custom">
+                        <li>Compruebe que escribió correctamente el correo electrónico.</li>
+                        <li>Verifique que la contraseña no tenga errores de escritura.</li>
+                        <li>Compruebe que está utilizando la cuenta registrada.</li>
+                        <li>Si olvidó la contraseña, utilice el procedimiento de recuperación.</li>
+                        <li>Si el problema continúa, contacte al responsable de ViveSport.</li>
+                    </ul>
+
+                </section>
+
+                <!-- 06. RECUPERACIÓN -->
+
+                <section id="recuperacion">
+
+                    <span class="section-number">Sección 06 · Acceso a la plataforma</span>
+
+                    <h2>6. Recuperación de contraseña</h2>
+
+                    <p>
+                        La recuperación de contraseña permite solicitar instrucciones
+                        para restablecer el acceso cuando el usuario no recuerda su
+                        contraseña.
+                    </p>
+
+                    <h3>6.1. Procedimiento general</h3>
+
+                    <div class="steps">
+
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                En la pantalla de acceso, busque la opción para recuperar
+                                la contraseña.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                Introduzca el correo electrónico asociado a su cuenta.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                Envíe la solicitud y revise la bandeja de entrada del correo.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                Si recibe un código de verificación, introdúzcalo en el
+                                formulario de recuperación.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                Siga las indicaciones para establecer la nueva contraseña.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">6</div>
+                            <div class="step-content">
+                                Regrese al inicio de sesión e intente ingresar con la
+                                nueva contraseña.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <h3>6.2. Recomendaciones</h3>
+
+                    <ul class="custom">
+                        <li>Revise las carpetas de correo no deseado o spam.</li>
+                        <li>Compruebe que escribió correctamente el correo.</li>
+                        <li>Utilice el código más reciente recibido.</li>
+                        <li>Solicite un nuevo código si el anterior expiró, cuando la plataforma lo permita.</li>
+                        <li>Respete el tiempo de espera que aparezca antes de solicitar otro código.</li>
+                        <li>No comparta los códigos de verificación con otras personas.</li>
+                    </ul>
+
+                    <div class="warning">
+                        Por seguridad, las solicitudes de recuperación pueden estar
+                        sujetas a límites de tiempo y de intentos. Si el sistema indica
+                        que debe esperar, siga el mensaje mostrado antes de volver a intentarlo.
+                    </div>
+
+                    <div class="info">
+                        Por protección de las cuentas, el mensaje del sistema puede ser
+                        neutral y no confirmar si un correo está registrado. Esto ayuda
+                        a evitar que otras personas descubran qué cuentas existen.
+                    </div>
+
+                </section>
+
+                <!-- 07. PANEL -->
+
+                <section id="panel">
+
+                    <span class="section-number">Sección 07 · Acceso a la plataforma</span>
+
+                    <h2>7. Panel principal</h2>
+
+                    <p>
+                        El panel principal es el punto de acceso a las funciones
+                        disponibles para cada cuenta. La información mostrada depende
+                        del rol del usuario y del estado de los torneos.
+                    </p>
+
+                    <h3>Panel del usuario</h3>
+
+                    <p>
+                        Desde las opciones habilitadas, el participante puede consultar
+                        torneos, gestionar la información de su equipo, revisar el estado
+                        de las inscripciones y consultar partidos o resultados.
+                    </p>
+
+                    <h3>Panel del administrador</h3>
+
+                    <p>
+                        El administrador dispone de funciones para gestionar las
+                        inscripciones, los equipos, los torneos, los partidos, los
+                        resultados y las cuentas de usuario.
+                    </p>
+
+                    <div class="tip">
+                        <strong>Consejo:</strong> utilice el menú de navegación de la
+                        plataforma para acceder a cada módulo. Si una opción no aparece,
+                        puede que no esté disponible para el rol de su cuenta.
+                    </div>
+
+                </section>
+
+                <!-- 08. TORNEOS -->
+
+                <section id="torneos">
+
+                    <span class="section-number">Sección 08 · Participación deportiva</span>
+
+                    <h2>8. Consultar torneos</h2>
+
+                    <p>
+                        Un torneo es una competencia deportiva organizada dentro de
+                        ViveSport. La información del torneo permite conocer su nombre,
+                        deporte, fecha y estado.
+                    </p>
+
+                    <h3>8.1. Consultar los torneos disponibles</h3>
+
+                    <div class="steps">
+
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                Inicie sesión si la consulta requiere autenticación.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                Abra el módulo de torneos.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                Revise la información disponible de cada competencia.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                Compruebe si el torneo permite inscripciones o si ya se
+                                encuentra en otra etapa.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <h3>8.2. Estados de un torneo</h3>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Estado</th>
+                                    <th>Significado</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge">Pendiente</span></td>
+                                    <td>
+                                        El torneo está registrado, pero todavía no ha
+                                        comenzado la etapa correspondiente.
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="badge green">Inscripciones abiertas</span></td>
+                                    <td>
+                                        Los equipos pueden solicitar su participación,
+                                        siempre que cumplan las condiciones del torneo.
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="badge yellow">Inscripciones cerradas</span></td>
+                                    <td>
+                                        Ya no se reciben nuevas solicitudes mientras se
+                                        mantenga este estado.
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="badge blue">En curso</span></td>
+                                    <td>
+                                        La competencia se encuentra en desarrollo.
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="badge">Finalizado</span></td>
+                                    <td>
+                                        El torneo ha concluido.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="warning">
+                        El estado del torneo determina qué operaciones están permitidas.
+                        Si las inscripciones están cerradas o el torneo ya está en curso,
+                        es posible que no pueda registrar un nuevo equipo.
+                    </div>
+
+                </section>
+
+                <!-- 09. EQUIPOS -->
+
+                <section id="equipos">
+
+                    <span class="section-number">Sección 09 · Participación deportiva</span>
+
+                    <h2>9. Equipos e integrantes</h2>
+
+                    <p>
+                        Un equipo agrupa a los participantes que competirán en un torneo.
+                        La información registrada debe ser correcta para facilitar la
+                        revisión de la inscripción y la organización de los encuentros.
+                    </p>
+
+                    <h3>9.1. Registrar o seleccionar un equipo</h3>
+
+                    <ol>
+                        <li>Acceda al módulo de equipos o a la opción disponible desde la inscripción.</li>
+                        <li>Seleccione la acción para registrar o gestionar un equipo.</li>
+                        <li>Complete los campos solicitados por el formulario.</li>
+                        <li>Revise el nombre y los datos del equipo.</li>
+                        <li>Guarde la información y compruebe el resultado de la operación.</li>
+                    </ol>
+
+                    <p>
+                        Los campos exactos pueden variar según el formulario disponible.
+                        Complete únicamente los datos que solicita la plataforma.
+                    </p>
+
+                    <h3>9.2. Integrantes del equipo</h3>
+
+                    <p>
+                        Cuando el sistema permita gestionar integrantes, revise que la
+                        información de cada participante esté asociada al equipo correcto.
+                        Compruebe las restricciones de integrantes que se indiquen para
+                        el torneo.
+                    </p>
+
+                    <h3>9.3. Recomendaciones</h3>
+
+                    <ul class="custom">
+                        <li>Evite registrar información duplicada.</li>
+                        <li>Verifique el nombre del equipo antes de enviar una solicitud.</li>
+                        <li>Compruebe que el equipo corresponde al torneo seleccionado.</li>
+                        <li>Revise las indicaciones del formulario sobre integrantes y cupos.</li>
+                        <li>Consulte al administrador si necesita corregir información que ya no puede editar.</li>
+                    </ul>
+
+                    <div class="info">
+                        Las acciones disponibles sobre un equipo pueden depender de su
+                        estado, de la inscripción asociada y de las reglas de la competencia.
+                    </div>
+
+                </section>
+
+                <!-- 10. INSCRIPCIONES -->
+
+                <section id="inscripciones">
+
+                    <span class="section-number">Sección 10 · Participación deportiva</span>
+
+                    <h2>10. Inscripción de equipos</h2>
+
+                    <p class="section-intro">
+                        La inscripción es la solicitud mediante la cual un equipo pide
+                        participar en un torneo.
+                    </p>
+
+                    <h3>10.1. Procedimiento de inscripción</h3>
+
+                    <div class="steps">
+
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                Ingrese a ViveSport con su cuenta.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                Consulte los torneos que tengan las inscripciones abiertas.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                Seleccione el torneo en el que desea participar.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                Seleccione o registre el equipo de acuerdo con las
+                                opciones disponibles.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                Revise los requisitos, cupos y demás condiciones de la
+                                competencia.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">6</div>
+                            <div class="step-content">
+                                Envíe la solicitud de inscripción.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">7</div>
+                            <div class="step-content">
+                                Consulte posteriormente el estado de la solicitud.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <h3>10.2. Estados de una inscripción</h3>
+
+                    <p>
+                        La inscripción puede pasar por diferentes estados de acuerdo
+                        con el proceso de revisión y las decisiones administrativas.
+                        Revise el estado que muestra la plataforma para conocer la
+                        situación de su equipo.
+                    </p>
+
+                    <ul class="custom">
+                        <li><strong>Pendiente de revisión:</strong> la solicitud todavía debe ser revisada.</li>
+                        <li><strong>Aceptada:</strong> el equipo ha sido admitido en el torneo.</li>
+                        <li><strong>Rechazada:</strong> la solicitud no fue aprobada.</li>
+                    </ul>
+
+                    <p>
+                        Si el sistema muestra una explicación o un mensaje adicional,
+                        léalo para conocer qué debe hacer a continuación.
+                    </p>
+
+                    <h3>10.3. Edición de la inscripción</h3>
+
+                    <p>
+                        Si la plataforma habilita la edición, utilice la opción
+                        correspondiente y guarde los cambios. Las modificaciones pueden
+                        estar limitadas por el número de ediciones, la aceptación del
+                        equipo o la proximidad de la fecha de inicio del torneo.
+                    </p>
+
+                    <div class="warning">
+                        Una inscripción aceptada puede quedar bloqueada para edición.
+                        Además, la plataforma puede impedir modificaciones cuando se
+                        aproxima el inicio del torneo. Revise el mensaje mostrado antes
+                        de realizar cambios.
+                    </div>
+
+                    <h3>10.4. ¿Qué hacer si no puede inscribir un equipo?</h3>
+
+                    <ul class="custom">
+                        <li>Verifique que las inscripciones estén abiertas.</li>
+                        <li>Compruebe que el equipo no esté inscrito previamente en ese torneo.</li>
+                        <li>Revise los requisitos y límites de equipos establecidos.</li>
+                        <li>Compruebe si el torneo ya inició o si la inscripción está bloqueada.</li>
+                        <li>Si el sistema presenta un error, conserve el mensaje para comunicarlo al administrador.</li>
+                    </ul>
+
+                </section>
+
+                <!-- 11. PARTIDOS -->
+
+                <section id="partidos">
+
+                    <span class="section-number">Sección 11 · Participación deportiva</span>
+
+                    <h2>11. Consulta de partidos programados</h2>
+
+                    <p>
+                        El módulo de partidos permite consultar los encuentros registrados
+                        para una competencia. La programación puede incluir los equipos
+                        participantes, la fecha, la hora y el estado del partido.
+                    </p>
+
+                    <h3>11.1. Consultar un partido</h3>
+
+                    <ol>
+                        <li>Abra el módulo de partidos.</li>
+                        <li>Seleccione el torneo, cuando la plataforma permita filtrar por competencia.</li>
+                        <li>Busque el encuentro que desea consultar.</li>
+                        <li>Revise los equipos, la fecha, la hora y el estado del partido.</li>
+                        <li>Consulte el resultado si el encuentro ya fue registrado como jugado.</li>
+                    </ol>
+
+                    <h3>11.2. Estados del partido</h3>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Estado</th>
+                                    <th>Descripción</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge blue">Programado</span></td>
+                                    <td>El encuentro tiene programación y está pendiente de jugarse.</td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="badge green">Jugado</span></td>
+                                    <td>El encuentro se ha disputado y puede contar con un resultado registrado.</td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="badge red">Cancelado</span></td>
+                                    <td>El encuentro ha sido marcado como cancelado.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="tip">
+                        Consulte los partidos periódicamente. Si un encuentro cambia de
+                        fecha u hora, tome como referencia la información actualizada que
+                        aparece en ViveSport.
+                    </div>
+
+                </section>
+
+                <!-- 12. RESULTADOS -->
+
+                <section id="resultados">
+
+                    <span class="section-number">Sección 12 · Participación deportiva</span>
+
+                    <h2>12. Resultados deportivos</h2>
+
+                    <p>
+                        Los resultados muestran la información registrada después de un
+                        encuentro. El método de registro depende del deporte y del formato
+                        configurado para el partido.
+                    </p>
+
+                    <h3>12.1. Fútbol</h3>
+
+                    <p>
+                        En los partidos de fútbol, el marcador se calcula a partir de
+                        los goles registrados para cada equipo. Por eso, el resultado
+                        debe coincidir con los goles ingresados durante el registro.
+                    </p>
+
+                    <p>
+                        Las tarjetas amarillas y rojas pueden formar parte de los datos
+                        disciplinarios del encuentro. Revise que cada tarjeta esté
+                        asociada al jugador y al equipo correspondientes.
+                    </p>
+
+                    <h3>12.2. Voleibol</h3>
+
+                    <p>
+                        En voleibol, el resultado se registra mediante sets. Cada set
+                        debe cumplir las reglas de puntuación configuradas para el deporte.
+                        El marcador final representa los sets ganados por cada equipo.
+                    </p>
+
+                    <h3>12.3. Tenis de mesa</h3>
+
+                    <p>
+                        En tenis de mesa, el resultado también se registra por sets.
+                        Cada set debe cumplir el puntaje objetivo y la diferencia necesaria
+                        para determinar un ganador.
+                    </p>
+
+                    <h3>12.4. Consulta del resultado</h3>
+
+                    <ol>
+                        <li>Abra el módulo de resultados o el detalle del partido.</li>
+                        <li>Localice el encuentro correspondiente.</li>
+                        <li>Revise los equipos participantes.</li>
+                        <li>Compruebe el marcador final.</li>
+                        <li>Si el deporte utiliza sets, revise el resultado de cada uno cuando esté disponible.</li>
+                    </ol>
+
+                    <div class="warning">
+                        Si detecta un resultado incorrecto, comuníquelo al administrador.
+                        No intente modificarlo desde una cuenta que no tenga autorización.
+                    </div>
+
+                </section>
+
+                <!-- 13. CLASIFICACIÓN -->
+
+                <section id="clasificacion">
+
+                    <span class="section-number">Sección 13 · Participación deportiva</span>
+
+                    <h2>13. Grupos y clasificación</h2>
+
+                    <p>
+                        Cuando un torneo utiliza una fase de grupos, los equipos se
+                        distribuyen en grupos y disputan los partidos correspondientes.
+                        La clasificación depende de los resultados registrados y de las
+                        reglas de la competencia.
+                    </p>
+
+                    <h3>13.1. Consultar un grupo</h3>
+
+                    <ol>
+                        <li>Abra el módulo de grupos o clasificación del torneo.</li>
+                        <li>Seleccione la competencia que desea consultar.</li>
+                        <li>Busque el grupo correspondiente.</li>
+                        <li>Revise los equipos y los datos de clasificación disponibles.</li>
+                        <li>Consulte los partidos y resultados asociados para entender la situación del grupo.</li>
+                    </ol>
+
+                    <h3>13.2. Estadísticas deportivas</h3>
+
+                    <p>
+                        Según la información registrada y las funciones habilitadas,
+                        pueden mostrarse estadísticas como los máximos goleadores y los
+                        jugadores con más tarjetas amarillas.
+                    </p>
+
+                    <ul class="custom">
+                        <li>Las estadísticas de goles dependen de los goles registrados.</li>
+                        <li>Las estadísticas disciplinarias dependen de las tarjetas registradas.</li>
+                        <li>Los datos pueden cambiar cuando se guardan o corrigen resultados autorizadamente.</li>
+                    </ul>
+
+                    <div class="info">
+                        La clasificación debe interpretarse según las reglas del torneo.
+                        No asuma que dos competencias utilizan necesariamente los mismos
+                        criterios de desempate.
+                    </div>
+
+                </section>
+
+                <!-- 14. ADMINISTRACIÓN DE TORNEOS -->
+
+                <section id="admin-torneos">
+
+                    <span class="section-number">Sección 14 · Administración</span>
+
+                    <h2>14. Crear y gestionar torneos</h2>
+
+                    <p>
+                        Esta sección está dirigida a las personas que cuentan con permisos
+                        administrativos. La creación de un torneo permite definir los
+                        datos generales de la competencia y preparar su funcionamiento.
+                    </p>
+
+                    <h3>14.1. Datos del torneo</h3>
+
+                    <p>
+                        De acuerdo con el formulario de ViveSport, la configuración del
+                        torneo puede incluir:
+                    </p>
+
+                    <ul class="custom">
+                        <li>Nombre del torneo.</li>
+                        <li>Deporte.</li>
+                        <li>Duración del partido, expresada en minutos.</li>
+                        <li>Descripción.</li>
+                        <li>Fecha de inicio.</li>
+                    </ul>
+
+                    <p>
+                        La configuración de la competencia puede incluir además los límites
+                        de equipos, la cantidad de grupos y las condiciones de clasificación.
+                    </p>
+
+                    <h3>14.2. Procedimiento general de creación</h3>
+
+                    <div class="steps">
+
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                Inicie sesión con una cuenta que tenga permisos de administrador.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                Abra el módulo administrativo de torneos.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                Seleccione la opción para crear un torneo.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                Complete los campos obligatorios del formulario.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                Compruebe que el deporte, la duración y la fecha sean correctos.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">6</div>
+                            <div class="step-content">
+                                Guarde el formulario y revise los mensajes de validación.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <h3>14.3. Validaciones importantes</h3>
+
+                    <ul class="custom">
+                        <li>La duración del partido debe cumplir el mínimo indicado por el formulario.</li>
+                        <li>La fecha de inicio debe cumplir las restricciones temporales de la plataforma.</li>
+                        <li>Los campos obligatorios deben completarse.</li>
+                        <li>La configuración de grupos debe ser coherente con los equipos y las reglas de clasificación.</li>
+                        <li>Revise los errores que aparezcan antes de volver a guardar.</li>
+                    </ul>
+
+                    <h3>14.4. Configurar la inscripción</h3>
+
+                    <p>
+                        La configuración de inscripción establece las condiciones para
+                        solicitar la participación. Según las opciones disponibles, puede
+                        contemplar límites mínimos y máximos de equipos y otras condiciones
+                        de la competencia.
+                    </p>
+
+                    <p>
+                        Revise la configuración antes de abrir las inscripciones. Si la
+                        plataforma indica que ya existe una configuración para ese torneo,
+                        consulte el registro existente en lugar de intentar crear duplicados.
+                    </p>
+
+                    <h3>14.5. Apertura y cierre de inscripciones</h3>
+
+                    <ul class="custom">
+                        <li>Abra las inscripciones cuando el torneo esté listo para recibir solicitudes.</li>
+                        <li>Compruebe que los límites y requisitos estén configurados correctamente.</li>
+                        <li>Cierre las inscripciones cuando corresponda según la organización del torneo.</li>
+                        <li>Revise las restricciones que se aplican después de realizar el sorteo o comenzar la competencia.</li>
+                    </ul>
+
+                    <div class="warning">
+                        La plataforma puede impedir volver a abrir inscripciones después
+                        de determinadas etapas, como la realización del sorteo. Compruebe
+                        el estado del torneo antes de realizar cambios.
+                    </div>
+
+                </section>
+
+                <!-- 15. ADMINISTRACIÓN DE INSCRIPCIONES -->
+
+                <section id="admin-inscripciones">
+
+                    <span class="section-number">Sección 15 · Administración</span>
+
+                    <h2>15. Gestionar inscripciones</h2>
+
+                    <p>
+                        El administrador revisa las solicitudes recibidas y determina
+                        si cumplen las condiciones para participar en el torneo.
+                    </p>
+
+                    <h3>15.1. Revisar una solicitud</h3>
+
+                    <ol>
+                        <li>Ingrese al panel administrativo.</li>
+                        <li>Abra el módulo de inscripciones.</li>
+                        <li>Seleccione el torneo correspondiente.</li>
+                        <li>Revise la información del equipo y los datos de la solicitud.</li>
+                        <li>Compruebe los requisitos y límites configurados.</li>
+                        <li>Utilice la acción disponible para aceptar o rechazar la solicitud.</li>
+                        <li>Compruebe que el cambio de estado se haya guardado correctamente.</li>
+                    </ol>
+
+                    <h3>15.2. Buenas prácticas administrativas</h3>
+
+                    <ul class="custom">
+                        <li>Revisar la solicitud antes de tomar una decisión.</li>
+                        <li>Comprobar que el equipo corresponde al torneo correcto.</li>
+                        <li>Evitar decisiones duplicadas o cambios accidentales.</li>
+                        <li>Consultar los límites de equipos y los requisitos de la competencia.</li>
+                        <li>Confirmar el estado después de guardar.</li>
+                    </ul>
+
+                    <div class="info">
+                        El administrador debe respetar las reglas del torneo y las
+                        restricciones del sistema. No todas las acciones están disponibles
+                        en todas las etapas de la competencia.
+                    </div>
+
+                </section>
+
+                <!-- 16. ADMINISTRACIÓN DE EQUIPOS -->
+
+                <section id="admin-equipos">
+
+                    <span class="section-number">Sección 16 · Administración</span>
+
+                    <h2>16. Gestionar equipos</h2>
+
+                    <p>
+                        El administrador puede revisar la información de los equipos y
+                        realizar las operaciones que estén habilitadas para su cuenta.
+                    </p>
+
+                    <h3>16.1. Revisión de la información</h3>
+
+                    <ol>
+                        <li>Abra el módulo administrativo de equipos.</li>
+                        <li>Busque el equipo que necesita revisar.</li>
+                        <li>Compruebe sus datos y el torneo asociado, si corresponde.</li>
+                        <li>Verifique su relación con las inscripciones y los partidos.</li>
+                        <li>Realice únicamente los cambios autorizados por el sistema.</li>
+                    </ol>
+
+                    <h3>16.2. Restricciones</h3>
+
+                    <p>
+                        Algunas operaciones pueden estar bloqueadas si el equipo está
+                        relacionado con una inscripción activa o con un torneo que todavía
+                        no ha finalizado. Antes de eliminar o modificar información,
+                        compruebe las relaciones existentes.
+                    </p>
+
+                    <div class="warning">
+                        No elimine registros para corregir un problema sin verificar
+                        primero sus consecuencias sobre inscripciones, torneos y partidos.
+                    </div>
+
+                </section>
+
+                <!-- 17. ADMINISTRACIÓN DE PARTIDOS -->
+
+                <section id="admin-partidos">
+
+                    <span class="section-number">Sección 17 · Administración</span>
+
+                    <h2>17. Programar y modificar partidos</h2>
+
+                    <p>
+                        La programación de partidos permite organizar los encuentros
+                        entre los equipos participantes. La información debe ser correcta
+                        para evitar cruces de horarios o errores en el calendario.
+                    </p>
+
+                    <h3>17.1. Programar un partido</h3>
+
+                    <ol>
+                        <li>Acceda al módulo administrativo de partidos.</li>
+                        <li>Seleccione el torneo al que pertenece el encuentro.</li>
+                        <li>Seleccione los equipos local y visitante según las opciones disponibles.</li>
+                        <li>Introduzca la fecha y la hora.</li>
+                        <li>Revise los equipos y los datos del encuentro.</li>
+                        <li>Guarde la programación.</li>
+                        <li>Compruebe que el partido aparezca con la información esperada.</li>
+                    </ol>
+
+                    <h3>17.2. Restricciones temporales</h3>
+
+                    <p>
+                        La programación debe respetar las validaciones de la plataforma.
+                        Entre las restricciones conocidas se encuentran:
+                    </p>
+
+                    <ul class="custom">
+                        <li>La fecha y la hora deben cumplir las condiciones de programación del formulario.</li>
+                        <li>La programación no debe generar cruces incompatibles para un mismo equipo.</li>
+                        <li>Se requiere un descanso mínimo de una hora entre partidos del mismo equipo.</li>
+                        <li>La programación debe respetar el límite temporal establecido por el sistema.</li>
+                    </ul>
+
+                    <div class="warning">
+                        La plataforma contempla restricciones de programación que pueden
+                        abarcar partidos del mismo equipo incluso en torneos diferentes.
+                        Si aparece un error de horario, revise los encuentros ya programados.
+                    </div>
+
+                    <h3>17.3. Modificar un partido</h3>
+
+                    <ol>
+                        <li>Busque el partido que necesita modificar.</li>
+                        <li>Compruebe que su estado permita la edición.</li>
+                        <li>Abra la opción de edición disponible.</li>
+                        <li>Modifique la información necesaria.</li>
+                        <li>Revise nuevamente la fecha, la hora y los equipos.</li>
+                        <li>Guarde los cambios y confirme el resultado.</li>
+                    </ol>
+
+                    <p>
+                        Los partidos jugados o cancelados pueden estar bloqueados para
+                        determinadas modificaciones. Si la opción no está disponible,
+                        revise el estado del encuentro.
+                    </p>
+
+                </section>
+
+                <!-- 18. ADMINISTRACIÓN DE RESULTADOS -->
+
+                <section id="admin-resultados">
+
+                    <span class="section-number">Sección 18 · Administración</span>
+
+                    <h2>18. Registrar resultados</h2>
+
+                    <p>
+                        El administrador registra el resultado de los encuentros una vez
+                        disputados. El procedimiento debe seguir las reglas del deporte
+                        seleccionado.
+                    </p>
+
+                    <h3>18.1. Procedimiento general</h3>
+
+                    <ol>
+                        <li>Abra el módulo de partidos o resultados.</li>
+                        <li>Busque el partido correspondiente.</li>
+                        <li>Compruebe que el encuentro se encuentre en un estado que permita registrar el resultado.</li>
+                        <li>Seleccione la opción para registrar el resultado.</li>
+                        <li>Complete los datos que solicita el formulario según el deporte.</li>
+                        <li>Revise los marcadores y los datos de jugadores.</li>
+                        <li>Guarde el resultado.</li>
+                        <li>Compruebe que el resultado aparezca actualizado en la plataforma.</li>
+                    </ol>
+
+                    <h3>18.2. Fútbol: goles y tarjetas</h3>
+
+                    <p>
+                        En fútbol, los goles registrados determinan el marcador del
+                        encuentro. Compruebe que cada gol esté asociado al partido, equipo
+                        y jugador correspondientes.
+                    </p>
+
+                    <p>
+                        Cuando se registren tarjetas, verifique el jugador al que se
+                        asignan y el tipo de tarjeta. La plataforma aplica límites y
+                        validaciones disciplinarias para evitar registros que no cumplan
+                        las reglas configuradas.
+                    </p>
+
+                    <h3>18.3. Voleibol y tenis de mesa: registro de sets</h3>
+
+                    <p>
+                        Estos deportes utilizan un formulario de puntuación por sets.
+                        El formato del partido determina cuántos sets pueden registrarse
+                        y cuántos debe ganar un equipo para obtener la victoria.
+                    </p>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Configuración</th>
+                                    <th>Mejor de 3</th>
+                                    <th>Mejor de 5</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>Sets necesarios para ganar</td>
+                                    <td>2</td>
+                                    <td>3</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Máximo de sets posibles</td>
+                                    <td>3</td>
+                                    <td>5</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>Puntuación de voleibol</h4>
+
+                    <ul class="custom">
+                        <li>Los sets regulares utilizan un objetivo de 25 puntos.</li>
+                        <li>El set decisivo utiliza un objetivo de 15 puntos.</li>
+                        <li>Se requiere una diferencia mínima de dos puntos para ganar el set.</li>
+                    </ul>
+
+                    <h4>Puntuación de tenis de mesa</h4>
+
+                    <ul class="custom">
+                        <li>El objetivo habitual configurado para cada set es de 11 puntos.</li>
+                        <li>Se requiere una diferencia mínima de dos puntos para ganar el set.</li>
+                    </ul>
+
+                    <h3>18.4. Reglas generales de validación de sets</h3>
+
+                    <ul class="custom">
+                        <li>No se debe registrar un empate como resultado final de un set.</li>
+                        <li>El ganador debe alcanzar la puntuación requerida y mantener una diferencia de al menos dos puntos.</li>
+                        <li>El número de sets ganados debe corresponder al marcador final del partido.</li>
+                        <li>No deben registrarse sets adicionales después de que un equipo haya alcanzado la cantidad necesaria para ganar.</li>
+                        <li>El formato seleccionado debe coincidir con la configuración del encuentro.</li>
+                    </ul>
+
+                    <div class="warning">
+                        Antes de guardar, revise todos los sets. Un puntaje incorrecto puede
+                        cambiar el resultado final y afectar las estadísticas o la clasificación.
+                    </div>
+
+                    <h3>18.5. Después de registrar el resultado</h3>
+
+                    <ol>
+                        <li>Verifique que el partido muestre el resultado correcto.</li>
+                        <li>Consulte el módulo de resultados para confirmar la actualización.</li>
+                        <li>Compruebe la información de clasificación cuando el torneo utilice grupos.</li>
+                        <li>Si detecta un error, utilice únicamente el procedimiento de corrección autorizado.</li>
+                    </ol>
+
+                </section>
+
+                <!-- 19. ADMINISTRACIÓN DE USUARIOS -->
+
+                <section id="admin-usuarios">
+
+                    <span class="section-number">Sección 19 · Administración</span>
+
+                    <h2>19. Gestionar usuarios</h2>
+
+                    <p>
+                        Las funciones de administración de usuarios permiten gestionar
+                        las cuentas conforme a los permisos asignados. El administrador
+                        debe revisar cuidadosamente cualquier operación que afecte el
+                        acceso de una persona a la plataforma.
+                    </p>
+
+                    <h3>19.1. Procedimiento general</h3>
+
+                    <ol>
+                        <li>Acceda al módulo administrativo de usuarios.</li>
+                        <li>Busque la cuenta que necesita consultar.</li>
+                        <li>Revise los datos disponibles.</li>
+                        <li>Seleccione la operación permitida que corresponda.</li>
+                        <li>Compruebe las relaciones de la cuenta con equipos e inscripciones.</li>
+                        <li>Confirme los cambios y verifique el resultado.</li>
+                    </ol>
+
+                    <h3>19.2. Consideraciones de seguridad</h3>
+
+                    <ul class="custom">
+                        <li>Solo personal autorizado debe asignar permisos administrativos.</li>
+                        <li>Los datos personales deben consultarse únicamente cuando exista una necesidad legítima.</li>
+                        <li>Antes de desactivar una cuenta, revise si tiene inscripciones o equipos vinculados.</li>
+                        <li>Respete las validaciones que impiden desactivar cuentas con relaciones deportivas activas.</li>
+                        <li>No comparta contraseñas ni códigos de recuperación.</li>
+                    </ul>
+
+                    <div class="danger">
+                        No intente eludir las restricciones del sistema mediante modificaciones
+                        directas de la base de datos. Las operaciones administrativas deben
+                        realizarse a través de los procedimientos autorizados.
+                    </div>
+
+                </section>
+
+                <!-- 20. SEGURIDAD -->
+
+                <section id="seguridad">
+
+                    <span class="section-number">Sección 20 · Seguridad</span>
+
+                    <h2>20. Seguridad y protección de la cuenta</h2>
+
+                    <p>
+                        El uso responsable de ViveSport contribuye a proteger los datos
+                        personales y la integridad de la información deportiva.
+                    </p>
+
+                    <h3>Recomendaciones para todos los usuarios</h3>
+
+                    <ul class="custom">
+                        <li>Utilice una contraseña que no comparta con otras personas.</li>
+                        <li>No envíe códigos de recuperación a terceros.</li>
+                        <li>Compruebe que se encuentra en la dirección oficial de la plataforma.</li>
+                        <li>Cierre la sesión cuando termine de utilizar ViveSport.</li>
+                        <li>Evite dejar una sesión abierta en computadores compartidos.</li>
+                        <li>Informe al responsable de la plataforma si detecta actividad inusual.</li>
+                    </ul>
+
+                    <h3>Recomendaciones para administradores</h3>
+
+                    <ul class="custom">
+                        <li>Utilice las funciones administrativas solo para las tareas autorizadas.</li>
+                        <li>Compruebe la información antes de guardar cambios importantes.</li>
+                        <li>Evite eliminar información sin verificar sus relaciones.</li>
+                        <li>Revise las operaciones de inscripción, programación y resultados.</li>
+                        <li>Proteja las credenciales de las cuentas con privilegios administrativos.</li>
+                    </ul>
+
+                    <div class="info">
+                        La plataforma incorpora controles de autenticación y validación.
+                        El usuario también debe contribuir a la seguridad evitando compartir
+                        sus credenciales y verificando los datos antes de enviarlos.
+                    </div>
+
+                </section>
+
+                <!-- 21. SOLUCIÓN DE PROBLEMAS -->
+
+                <section id="problemas">
+
+                    <span class="section-number">Sección 21 · Ayuda</span>
+
+                    <h2>21. Solución de problemas frecuentes</h2>
+
+                    <p>
+                        Si una operación no se completa, revise primero el mensaje
+                        mostrado por la plataforma. La siguiente tabla presenta causas
+                        posibles y acciones recomendadas.
+                    </p>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Problema</th>
+                                    <th>Qué revisar</th>
+                                    <th>Acción recomendada</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>No puede registrarse.</td>
+                                    <td>Campos obligatorios, formato de correo y ficha.</td>
+                                    <td>Corrija los datos señalados y vuelva a enviar el formulario.</td>
+                                </tr>
+
+                                <tr>
+                                    <td>No puede iniciar sesión.</td>
+                                    <td>Correo y contraseña.</td>
+                                    <td>Verifique las credenciales o utilice la recuperación de contraseña.</td>
+                                </tr>
+
+                                <tr>
+                                    <td>No recibe el código de recuperación.</td>
+                                    <td>Correo registrado, bandeja de entrada y spam.</td>
+                                    <td>Revise el correo y siga las indicaciones para solicitar otro código.</td>
+                                </tr>
+
+                                <tr>
+                                    <td>No puede inscribir un equipo.</td>
+                                    <td>Estado del torneo, duplicados y límites de inscripción.</td>
+                                    <td>Compruebe las condiciones del torneo o consulte al administrador.</td>
+                                </tr>
+
+                                <tr>
+                                    <td>No puede editar una inscripción.</td>
+                                    <td>Estado de la solicitud, límite de ediciones y fecha del torneo.</td>
+                                    <td>Revise las restricciones que muestra la plataforma.</td>
+                                </tr>
+
+                                <tr>
+                                    <td>No puede programar un partido.</td>
+                                    <td>Fecha, hora, duración y otros encuentros del equipo.</td>
+                                    <td>Corrija la programación para cumplir las restricciones temporales.</td>
+                                </tr>
+
+                                <tr>
+                                    <td>No puede modificar un partido.</td>
+                                    <td>Estado del encuentro.</td>
+                                    <td>Compruebe si el partido ya está jugado o cancelado.</td>
+                                </tr>
+
+                                <tr>
+                                    <td>El sistema rechaza un resultado por sets.</td>
+                                    <td>Formato, puntuaciones, diferencia de puntos y sets registrados.</td>
+                                    <td>Revise las reglas del deporte y corrija el marcador.</td>
+                                </tr>
+
+                                <tr>
+                                    <td>No aparece una opción administrativa.</td>
+                                    <td>Rol de la cuenta y permisos asignados.</td>
+                                    <td>Consulte al responsable de la plataforma.</td>
+                                </tr>
+
+                                <tr>
+                                    <td>La página no carga correctamente.</td>
+                                    <td>Conexión, navegador y dirección de acceso.</td>
+                                    <td>Compruebe Internet y vuelva a cargar la página.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Qué información comunicar al solicitar ayuda</h3>
+
+                    <ul class="custom">
+                        <li>Qué módulo estaba utilizando.</li>
+                        <li>Qué operación intentaba realizar.</li>
+                        <li>Qué mensaje mostró el sistema.</li>
+                        <li>Qué pasos realizó antes de que apareciera el problema.</li>
+                        <li>Una captura de pantalla sin contraseñas, códigos ni datos sensibles.</li>
+                    </ul>
+
+                    <div class="danger">
+                        No incluya contraseñas, códigos de recuperación ni credenciales
+                        en capturas de pantalla o reportes de errores.
+                    </div>
+
+                </section>
+
+                <!-- 22. FLUJO GENERAL -->
+
+                <section id="flujo">
+
+                    <span class="section-number">Sección 22 · Flujo del sistema</span>
+
+                    <h2>22. Flujo general de uso de ViveSport</h2>
+
+                    <p>
+                        El siguiente flujo resume el proceso habitual desde el ingreso
+                        a la plataforma hasta la consulta de la información deportiva.
+                    </p>
+
+                    <div class="flow">
+
+                        <div class="flow-box primary">Inicio: abrir ViveSport</div>
+
+                        <div class="flow-arrow">↓</div>
+
+                        <div class="flow-box">
+                            <strong>¿Tiene una cuenta?</strong>
+                        </div>
+
+                        <div class="flow-arrow">↓</div>
+
+                        <div class="flow-box">
+                            Si no tiene cuenta: registrarse, completar los datos y crear la cuenta.
+                        </div>
+
+                        <div class="flow-arrow">↓</div>
+
+                        <div class="flow-box">
+                            Iniciar sesión con el correo y la contraseña.
+                        </div>
+
+                        <div class="flow-arrow">↓</div>
+
+                        <div class="flow-box">
+                            El sistema habilita las opciones correspondientes al rol de la cuenta.
+                        </div>
+
+                        <div class="grid">
+
+                            <div class="flow-box">
+                                <strong>Usuario</strong><br>
+                                Consultar torneos, gestionar equipos, solicitar inscripciones
+                                y revisar partidos y resultados.
+                            </div>
+
+                            <div class="flow-box">
+                                <strong>Administrador</strong><br>
+                                Gestionar torneos, inscripciones, equipos, programación,
+                                resultados y usuarios.
+                            </div>
+
+                        </div>
+
+                        <div class="flow-arrow">↓</div>
+
+                        <div class="flow-box">
+                            Consultar la información actualizada y cerrar la sesión al terminar.
+                        </div>
+
+                        <div class="flow-arrow">↓</div>
+
+                        <div class="flow-box primary">Fin del proceso</div>
+
+                    </div>
+
+                </section>
+
+                <!-- 23. GLOSARIO -->
+
+                <section id="glosario">
+
+                    <span class="section-number">Sección 23 · Información de consulta</span>
+
+                    <h2>23. Glosario de términos</h2>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Término</th>
+                                    <th>Definición</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td><strong>ViveSport</strong></td>
+                                    <td>Plataforma web destinada a la gestión y participación en competencias deportivas.</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Usuario</strong></td>
+                                    <td>Persona que utiliza las funciones habilitadas para su cuenta.</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Administrador</strong></td>
+                                    <td>Usuario con permisos para gestionar operaciones administrativas.</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Equipo</strong></td>
+                                    <td>Grupo de participantes que compite en una disciplina deportiva.</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Torneo</strong></td>
+                                    <td>Competencia organizada dentro de la plataforma.</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Inscripción</strong></td>
+                                    <td>Solicitud de participación de un equipo en un torneo.</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Partido</strong></td>
+                                    <td>Encuentro deportivo programado entre los participantes o equipos.</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Resultado</strong></td>
+                                    <td>Información registrada después de disputar un partido.</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Set</strong></td>
+                                    <td>Unidad de puntuación utilizada en deportes como voleibol y tenis de mesa.</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Clasificación</strong></td>
+                                    <td>Organización de los equipos según los resultados y las reglas de la competencia.</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Panel principal</strong></td>
+                                    <td>Área desde la que se accede a las opciones disponibles para una cuenta.</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Autenticación</strong></td>
+                                    <td>Proceso mediante el cual el sistema verifica las credenciales de acceso.</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Permisos</strong></td>
+                                    <td>Autorizaciones que determinan qué operaciones puede realizar una cuenta.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+                <!-- 24. LISTA DE VERIFICACIÓN -->
+
+                <section id="verificacion">
+
+                    <span class="section-number">Sección 24 · Lista de verificación</span>
+
+                    <h2>24. Lista de verificación para el usuario</h2>
+
+                    <p>
+                        Utilice esta lista como recordatorio de las acciones más
+                        importantes al trabajar con ViveSport.
+                    </p>
+
+                    <div class="checklist">
+
+                        <label>
+                            <input type="checkbox">
+                            <span>He completado el registro con datos correctos.</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox">
+                            <span>He comprobado que mi correo electrónico esté escrito correctamente.</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox">
+                            <span>He protegido mi contraseña y los códigos de recuperación.</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox">
+                            <span>He revisado el deporte y las condiciones del torneo antes de inscribirme.</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox">
+                            <span>He verificado la información del equipo antes de enviar la inscripción.</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox">
+                            <span>He consultado el estado de mi inscripción.</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox">
+                            <span>He revisado la fecha y la hora de los partidos.</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox">
+                            <span>He comprobado los resultados y la información deportiva disponible.</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox">
+                            <span>He cerrado la sesión al terminar de utilizar la plataforma.</span>
+                        </label>
+
+                    </div>
+
+                    <p class="no-print">
+                        Las casillas pueden marcarse durante la consulta del manual.
+                        No representan una verificación automática de la cuenta ni
+                        modifican información en ViveSport.
+                    </p>
+
+                </section>
+
+                <!-- 25. CONCLUSIONES -->
+
+                <section id="conclusiones">
+
+                    <span class="section-number">Sección 25 · Cierre</span>
+
+                    <h2>25. Conclusiones</h2>
+
+                    <p>
+                        ViveSport reúne en una plataforma las operaciones relacionadas
+                        con usuarios, equipos, torneos, inscripciones, partidos y
+                        resultados deportivos.
+                    </p>
+
+                    <p>
+                        La separación entre las funciones del usuario y las del
+                        administrador permite organizar las responsabilidades y
+                        controlar las operaciones disponibles según los permisos de
+                        cada cuenta.
+                    </p>
+
+                    <p>
+                        El uso adecuado de la plataforma requiere introducir información
+                        correcta, respetar las condiciones de las competencias, revisar
+                        los mensajes del sistema y proteger las credenciales de acceso.
+                    </p>
+
+                    <h3>Recomendaciones finales</h3>
+
+                    <ul class="custom">
+                        <li>Mantenga actualizada la información que registra.</li>
+                        <li>Revise las condiciones del torneo antes de enviar una inscripción.</li>
+                        <li>Consulte periódicamente los partidos y sus posibles modificaciones.</li>
+                        <li>Verifique los resultados antes de confirmar operaciones administrativas.</li>
+                        <li>Respete los permisos asignados a cada tipo de cuenta.</li>
+                        <li>Reporte los errores con información clara y sin exponer datos sensibles.</li>
+                        <li>Cierre la sesión al finalizar el uso de la plataforma.</li>
+                    </ul>
+
+                </section>
+
+                <!-- 26. CONTACTO Y CONTROL DOCUMENTAL -->
+
+                <section id="contacto">
+
+                    <span class="section-number">Sección 26 · Control documental</span>
+
+                    <h2>26. Contacto y control documental</h2>
+
+                    <h3>Información del proyecto</h3>
+
+                    <div class="table-wrap">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>Nombre de la plataforma</th>
+                                    <td>ViveSport</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Equipo desarrollador</th>
+                                    <td>Viveros Team</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Responsable del proyecto</th>
+                                    <td>Santiago Zapata Viveros</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Tipo de documento</th>
+                                    <td>Manual de usuario</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Versión del manual</th>
+                                    <td>1.0</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Año</th>
+                                    <td>2026</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Dirección oficial</th>
+                                    <td>
+                                        <strong>https://vivesport.onrender.com</strong>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Canal de soporte</th>
+                                    <td>
+                                        <strong>contactanos.vivesport@gmail.com</strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Historial de versiones</h3>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Versión</th>
+                                    <th>Fecha</th>
+                                    <th>Descripción</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>1.0</td>
+                                    <td>2026</td>
+                                    <td>Primera versión del manual de usuario de ViveSport.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="warning">
+                        Antes de entregar o publicar el documento, complete la URL oficial
+                        y el canal real de soporte. No deje datos de contacto ficticios
+                        ni publique una dirección que no corresponda a la plataforma.
+                    </div>
+
+                </section>
+
+                <footer class="footer">
+                    <strong>ViveSport · Manual de Usuario</strong>
+
+                    <p>
+                        Documento de orientación para el uso de la plataforma deportiva.
+                    </p>
+
+                    <p>
+                        Viveros Team · Versión 1.0 · 2026
+                    </p>
+                </footer>
+
+            </div>
+        </main>
+
+    </div>
+
+    <button
+        id="volverArriba"
+        class="back-top no-print"
+        type="button"
+        aria-label="Volver al inicio"
+        title="Volver al inicio"
+    >
+        ↑
+    </button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const buscador = document.getElementById("buscador");
+            const indice = document.getElementById("indice");
+            const grupos = indice.querySelectorAll(".menu-group");
+            const sinResultados = document.getElementById("sinResultados");
+            const botonArriba = document.getElementById("volverArriba");
+            const enlaces = indice.querySelectorAll("a");
+
+            /*
+             * BUSCADOR DEL ÍNDICE
+             *
+             * Filtra los enlaces del índice por el texto introducido.
+             * No modifica el contenido del manual.
+             */
+
+            buscador.addEventListener("input", function () {
+
+                const consulta = buscador.value
+                    .trim()
+                    .toLocaleLowerCase("es");
+
+                let cantidadVisible = 0;
+
+                grupos.forEach(function (grupo) {
+
+                    const enlacesGrupo = grupo.querySelectorAll("a");
+                    let grupoVisible = false;
+
+                    enlacesGrupo.forEach(function (enlace) {
+
+                        const texto = enlace.textContent
+                            .trim()
+                            .toLocaleLowerCase("es");
+
+                        const coincide = texto.includes(consulta);
+
+                        enlace.parentElement.style.display =
+                            coincide ? "" : "none";
+
+                        if (coincide) {
+                            grupoVisible = true;
+                            cantidadVisible++;
+                        }
+                    });
+
+                    grupo.style.display = grupoVisible ? "" : "none";
+                });
+
+                sinResultados.style.display =
+                    cantidadVisible === 0 ? "block" : "none";
+            });
+
+            /*
+             * RESALTAR EL ENLACE SELECCIONADO
+             */
+
+            enlaces.forEach(function (enlace) {
+
+                enlace.addEventListener("click", function () {
+
+                    enlaces.forEach(function (otroEnlace) {
+                        otroEnlace.classList.remove("active");
+                    });
+
+                    enlace.classList.add("active");
+                });
+            });
+
+            /*
+             * BOTÓN PARA VOLVER AL INICIO
+             */
+
+            window.addEventListener("scroll", function () {
+
+                if (window.scrollY > 400) {
+                    botonArriba.classList.add("visible");
+                } else {
+                    botonArriba.classList.remove("visible");
+                }
+            });
+
+            botonArriba.addEventListener("click", function () {
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            });
+
+        });
+    </script>
+
+</body>
+</html>
